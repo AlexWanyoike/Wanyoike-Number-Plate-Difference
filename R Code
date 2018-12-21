@@ -1,0 +1,54 @@
+numberplatediff<-function(x,y)
+{
+  number1<-toupper(x)
+  number2<-toupper(y)
+letters<-toupper(LETTERS)
+#Include alll the letter in the alphabet except I and O.
+letters<-letters[-c(9,15)]
+#creating an index for the letters where a has the highest and z has the lowest 
+myindex<-order(1:length(letters),decreasing = T)
+mydf<-cbind(letters,myindex)
+mynum<-as.character(c(0:9))
+datnum<-data.frame(cbind(mynum,mynum))
+colnames(datnum)<-colnames(mydf)
+fmydf<-rbind(mydf,datnum)
+fmydf$letters<-as.character(fmydf$letters)
+fmydf$myindex<-as.character(fmydf$myindex)
+none<-unlist(strsplit(number1,split = ""),use.names = F)
+ntwo<-unlist(strsplit(number2,split = ""),use.names= F)
+indexedone<-c()
+ggg<-for(i in 1:length(none))
+{
+indexedone[i]<-fmydf[fmydf[,1]==none[i],][2]  
+}
+indexedone<-as.numeric(indexedone)
+indexedtwo<-c()
+ggg2<-for(i in 1:length(ntwo))
+{
+  indexedtwo[i]<-fmydf[fmydf[,1]==ntwo[i],][2]  
+}
+indexedtwo<-as.numeric(indexedtwo)
+#combined list indexed number plates 
+hgone.a<-indexedone[2]
+hgone.b<-indexedone[3]
+hgone.c<-paste(indexedone[4:6],collapse = "")
+hgone.d<-indexedone[7]
+hgtwo.a<-indexedtwo[2]
+hgtwo.b<-indexedtwo[3]
+hgtwo.c<-paste(indexedtwo[4:6],collapse = "")
+hgtwo.d<-indexedtwo[7]
+#make a dataframe
+one<-c(hgone.a,hgone.b,hgone.c,hgone.d)
+two<-c(hgtwo.a,hgtwo.b,hgtwo.c,hgtwo.d)
+cplate<-data.frame(as.numeric(one),as.numeric(two))
+names(cplate)<-c("one","two")
+cplate$three<-cplate$one-cplate$two
+difftotal<-(cplate$three[1]*24*999*24+cplate$three[2]*999*24*24+cplate$three[3]*24+cplate$three[4])-1
+difftotal
+}
+difftotal
+numberplatediff("kab001a","kac001a")
+
+#The x value should be the oldest number plate. Y is the most recent number plate. 
+
+
