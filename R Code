@@ -3,7 +3,7 @@ numberplatediff<-function(x,y)
   number1<-toupper(x)
   number2<-toupper(y)
 letters<-toupper(LETTERS)
-#Include alll the letter in the alphabet except I and O.
+#Include all the letter in the alphabet except I and O.
 letters<-letters[-c(9,15)]
 #creating an index for the letters where a has the highest and z has the lowest 
 myindex<-order(1:length(letters),decreasing = T)
